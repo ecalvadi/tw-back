@@ -15,7 +15,7 @@ class PositionController extends Controller
      */
     public function create(Request $request)
     {
-        $position = Position::where('user_id', auth()->id())->firstOr(function () {
+        return Position::where('user_id', auth()->id())->firstOr(function () {
             $position = new Position();
             $position->lat = request()->lat;
             $position->lon = request()->lon;
@@ -24,24 +24,12 @@ class PositionController extends Controller
 
             return response()->json($position, 201);
         });
-
-        $position->lat = request()->lat;
-        $position->lon = request()->lon;
-        $this->update($request, $position);
     }
 
     /**
      * Display the specified resource.
      */
-    public function get(Position $position)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function getByUser(Position $position)
+    public function getByUser(Request $request)
     {
         $userId = auth()->id();
 
@@ -53,7 +41,11 @@ class PositionController extends Controller
      */
     public function update(Request $request, Position $position)
     {
-        $position->update();
+        $position = Position::find($request->id)->first();
+
+        $position->lat = $request->lat;
+        $position->lon = $request->lon;
+        $position->save();
 
         return response()->json($position, 201);
     }
