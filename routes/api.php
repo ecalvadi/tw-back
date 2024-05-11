@@ -3,13 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-Route::get('/api', function (){
-    return response()->json([]);
-});
+use App\Http\Controllers\PositionController;
+use App\Models\Position;
 
 Route::group([
     'middleware' => 'api',
@@ -20,4 +15,15 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
     Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
     Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'positions'
+], function ($router) {
+    Route::post('', [PositionController::class, 'create'])->middleware('auth:api')->name('create');
+    Route::get('/{positionId}', [PositionController::class, 'get'])->middleware('auth:api')->name('get');
+    Route::get('/by-user', [PositionController::class, 'getByUser'])->middleware('auth:api')->name('getByUser');
+    Route::patch('/{positionId}', [PositionController::class, 'update'])->middleware('auth:api')->name('update');
+    Route::delete('/{positionId}', [PositionController::class, 'delete'])->middleware('auth:api')->name('delete');
 });
