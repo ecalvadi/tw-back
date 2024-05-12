@@ -32,8 +32,14 @@ class PositionController extends Controller
     public function getByUser(Request $request)
     {
         $userId = auth()->id();
+        $position = Position::where('user_id', $userId)->first();
 
-        return response()->json(Position::where('user_id', $userId)->first());
+        if ($position){
+            return response()->json($position);
+        } else {
+            return response()->json(new Position());
+        }
+
     }
 
     /**
