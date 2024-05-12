@@ -22,7 +22,7 @@ Route::group([
     'prefix' => 'positions'
 ], function ($router) {
     Route::post('', [PositionController::class, 'create'])->middleware('auth:api')->name('create');
-    Route::get('/byUser', [PositionController::class, 'getByUser'])->middleware('auth:api')->name('getByUser');
+    Route::get('/byUser', [PositionController::class, 'byUser'])->middleware('auth:api')->name('byUser');
     Route::put('/{positionId}', [PositionController::class, 'update'])->middleware('auth:api')->name('update');
     Route::delete('/{positionId}', [PositionController::class, 'delete'])->middleware('auth:api')->name('delete');
 });
