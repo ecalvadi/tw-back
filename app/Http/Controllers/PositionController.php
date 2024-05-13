@@ -22,7 +22,7 @@ class PositionController extends Controller
             $position->user_id = auth()->id();
             $position->save();
 
-            return position;
+            return $position;
         });
 
         return response()->json($returnPosition, 201);
