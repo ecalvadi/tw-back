@@ -23,6 +23,22 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
+        User::create([
+            'name' => 'John Doe',
+            'email' => 'john@demo.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('john123'), // password
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name' => 'Indiana Jones',
+            'email' => 'indi@demo.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('indi123'), // password
+            'remember_token' => Str::random(10),
+        ]);
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
